@@ -1,20 +1,27 @@
 package com.niceprice.shop.models;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import lombok.Data;
-
-import javax.persistence.*;
 
 @Entity
 @Data
-public class Product {
+public class Product implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
-  @ManyToOne(fetch = FetchType.LAZY, targetEntity = Basked.class)
-  @JoinColumn(name = "id_basked", nullable = false)
-  private Basked basked;
 
   @ManyToOne(targetEntity = Category.class)
   @JoinColumn(name = "id_category", nullable = false)
@@ -30,4 +37,11 @@ public class Product {
   private String description;
 
   private Double discount;
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "product_basked",
+  joinColumns = @JoinColumn(name = "basked_id"),
+  inverseJoinColumns = @JoinColumn(name = "product_id"))
+  private List<Basked> baskets = new ArrayList<>();
+
 }

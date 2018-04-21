@@ -1,5 +1,6 @@
 package com.niceprice.shop.models;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Category {
+public class Category implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
